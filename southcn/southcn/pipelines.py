@@ -8,7 +8,6 @@
 
 import pymongo
 
-from southcn.items import SouthcnItem
 
 
 class MongoPipeline(object):
@@ -37,16 +36,3 @@ class MongoPipeline(object):
         self.db[self.collection_name].insert_one(dict(item))
         return item
 
-
-
-class SouthcnPipeline(object):
-
-    def __init__(self):
-        self.ids_seen = set()
-
-    def process_item(self, item, spider):
-        if item['text_url'] in self.ids_seen:
-            print SouthcnItem("Southcn item found: %s" % item)
-        else:
-            self.ids_seen.add(item['text_url'])
-            return item
